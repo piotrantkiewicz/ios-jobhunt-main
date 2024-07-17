@@ -20,7 +20,7 @@ public extension UIFont {
     }
     
     static var button: UIFont {
-        UIFont(name: Fonts.urbanistMedium.rawValue, size: 16)!
+        UIFont(name: Fonts.urbanistBold.rawValue, size: 16)!
     }
     
     static var otpTitle: UIFont {

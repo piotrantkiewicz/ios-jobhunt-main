@@ -7,7 +7,7 @@ enum OTPStrings: String {
     case title = "Enter the OTP code"
     case subtitle = "To confirm the account, enter the 6-digit code \nwe sent to "
     case submitButton = "Submit"
-    case codeLabel = "Didn’t get a code?"
+    case receiveLabel = "Didn’t get a code?"
     case resendLabel = "Resend code"
 }
 
@@ -36,6 +36,8 @@ extension OTPViewController {
         setupTitle()
         setupSubtitle()
         setupOTPTextFields()
+        setupResendCodeLabels()
+        setupSubmitButton()
     }
     
     private func setupStackView() {
@@ -134,7 +136,51 @@ extension OTPViewController {
         
         stackView.addArrangedSubview(fieldsStackView)
         
+        stackView.setCustomSpacing(16, after: fieldsStackView)
+        
         textFields = fields
+    }
+    
+    private func setupResendCodeLabels() {
+        let codeStackView = UIStackView()
+        codeStackView.axis = .horizontal
+        codeStackView.distribution = .equalSpacing
+        
+        let receiveLabel = UILabel()
+        receiveLabel.text = OTPStrings.receiveLabel.rawValue
+        receiveLabel.textColor = .subtitleText
+        receiveLabel.font = .subtitle
+        
+        let resendLabel = UILabel()
+        resendLabel.text = OTPStrings.resendLabel.rawValue
+        resendLabel.textColor = .accent
+        resendLabel.font = .otp
+        
+        codeStackView.addArrangedSubview(receiveLabel)
+        codeStackView.addArrangedSubview(resendLabel)
+        
+        stackView.addArrangedSubview(codeStackView)
+    }
+    
+    private func setupSubmitButton() {
+        let button = UIButton()
+        button.backgroundColor = .accent
+        button.titleLabel?.font = .button
+        button.setTitle(OTPStrings.submitButton.rawValue, for: .normal)
+        button.layer.cornerRadius = 28
+        button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(didTapSubmitBtn), for: .touchUpInside)
+        
+        view.addSubview(button)
+        
+        button.snp.makeConstraints { make in
+            make.height.equalTo(56)
+            make.width.equalTo(335)
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-40)
+        }
+        
+        self.continueBtn = button
     }
 }
 
@@ -169,5 +215,10 @@ extension OTPViewController {
         textField.superview?.layer.backgroundColor = UIColor.textField.cgColor
         textField.superview?.layer.borderColor = UIColor.clear.cgColor
         textField.superview?.layer.shadowColor = UIColor.clear.cgColor
+    }
+    
+    @objc func didTapSubmitBtn() {
+        
+        print("submit button tapped")
     }
 }
