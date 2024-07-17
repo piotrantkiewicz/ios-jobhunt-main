@@ -17,6 +17,7 @@ public class PhoneNumberViewController: UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupUI()
         configureKeyboard()
     }
@@ -177,8 +178,8 @@ extension PhoneNumberViewController {
         
         button.snp.makeConstraints { make in
             make.height.equalTo(56)
-            make.width.equalTo(335)
-            make.centerX.equalToSuperview()
+            make.left.equalToSuperview().offset(20)
+            make.right.equalToSuperview().offset(-20)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-40)
         }
         
