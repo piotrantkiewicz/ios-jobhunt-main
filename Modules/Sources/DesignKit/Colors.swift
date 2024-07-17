@@ -21,5 +21,9 @@ public extension UIColor {
     static var textField: UIColor {
         UIColor(resource: .textField)
     }
+    
+    static var dropShadow: UIColor {
+        UIColor(resource: .dropShadow)
+    }
 
 }

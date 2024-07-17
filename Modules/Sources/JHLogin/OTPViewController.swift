@@ -11,7 +11,7 @@ enum OTPStrings: String {
     case resendLabel = "Resend code"
 }
 
-public class OTPViewController: UIViewController {
+public class OTPViewController: UIViewController, UITextFieldDelegate {
     
     private weak var stackView: UIStackView!
     private weak var continueBtn: UIButton!
@@ -104,12 +104,16 @@ extension OTPViewController {
             background.backgroundColor = .textField
             background.layer.cornerRadius = 12
             background.layer.masksToBounds = true
+            background.layer.borderWidth = 2
+            background.layer.borderColor = UIColor.clear.cgColor
             
             let textField = UITextField()
             textField.textAlignment = .center
             textField.textColor = .primary
+            textField.tintColor = .accent
             textField.font = .otpTextField
             textField.keyboardType = .numberPad
+            textField.delegate = self
             textField.addTarget(self, action: #selector(didChangeText), for: .editingChanged)
             textField.tag = 100 + index
             
@@ -148,6 +152,22 @@ extension OTPViewController {
         }
         
         textFields[nextIndex].becomeFirstResponder()
+    }
+    
+    public func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.superview?.layer.backgroundColor = UIColor.white.cgColor
+        textField.superview?.layer.borderColor = UIColor.accent.cgColor
+        textField.superview?.layer.shadowColor = UIColor.dropShadow.cgColor
+        textField.superview?.layer.shadowOffset = CGSize(width: 0, height: 0)
+        textField.superview?.layer.shadowOpacity = 1.0
+        textField.superview?.layer.shadowRadius = 4.0
+        textField.superview?.layer.masksToBounds = false
         
+    }
+    
+    public func textFieldDidEndEditing(_ textField: UITextField) {
+        textField.superview?.layer.backgroundColor = UIColor.textField.cgColor
+        textField.superview?.layer.borderColor = UIColor.clear.cgColor
+        textField.superview?.layer.shadowColor = UIColor.clear.cgColor
     }
 }
