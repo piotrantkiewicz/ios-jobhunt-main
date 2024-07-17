@@ -17,4 +17,9 @@ public extension UIColor {
     static var subtitleText: UIColor {
         UIColor(resource: .subtitleText)
     }
+    
+    static var textField: UIColor {
+        UIColor(resource: .textField)
+    }
+
 }

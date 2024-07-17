@@ -76,12 +76,13 @@ extension PhoneNumberViewController {
         setupSubtitle()
         setupTextField()
         setupContinueButton()
+        
+        didTapContinueBtn()
     }
     
     private func setupStackView() {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.spacing = 24
         
         view.addSubview(stackView)
         
@@ -101,6 +102,8 @@ extension PhoneNumberViewController {
         
         stackView.addArrangedSubview(icon)
         
+        stackView.setCustomSpacing(24, after: icon)
+        
         icon.snp.makeConstraints { make in
             make.size.equalTo(64)
         }
@@ -114,6 +117,8 @@ extension PhoneNumberViewController {
         label.textAlignment = .center
         
         stackView.addArrangedSubview(label)
+        
+        stackView.setCustomSpacing(8, after: label)
     }
     
     private func setupSubtitle() {
@@ -125,6 +130,8 @@ extension PhoneNumberViewController {
         label.textAlignment = .center
         
         stackView.addArrangedSubview(label)
+        
+        stackView.setCustomSpacing(20, after: label)
     }
     
     private func setupTextField() {
@@ -132,7 +139,9 @@ extension PhoneNumberViewController {
         textFieldBackground.backgroundColor = .secondary
         textFieldBackground.layer.cornerRadius = 16
         textFieldBackground.layer.masksToBounds = true
+        
         stackView.addArrangedSubview(textFieldBackground)
+        
         textFieldBackground.snp.makeConstraints { make in
             make.height.equalTo(56)
         }
@@ -162,7 +171,7 @@ extension PhoneNumberViewController {
         button.setTitle(PhoneNumberStrings.continueButton.rawValue, for: .normal)
         button.layer.cornerRadius = 28
         button.layer.masksToBounds = true
-        button.addTarget(self, action: #selector(didTapContinue), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didTapContinueBtn), for: .touchUpInside)
         
         view.addSubview(button)
         
@@ -179,7 +188,10 @@ extension PhoneNumberViewController {
 
 extension PhoneNumberViewController {
     
-    @objc func didTapContinue() {
-        print("Button tapped")
+    @objc func didTapContinueBtn() {
+        
+        let otpVC = OTPViewController()
+        otpVC.phoneNumber = textField.text ?? ""
+        navigationController?.pushViewController(otpVC, animated: true)
     }
 }

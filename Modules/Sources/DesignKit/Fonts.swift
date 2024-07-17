@@ -22,4 +22,17 @@ public extension UIFont {
     static var button: UIFont {
         UIFont(name: Fonts.urbanistMedium.rawValue, size: 16)!
     }
+    
+    static var otpTitle: UIFont {
+        UIFont(name: Fonts.urbanistBold.rawValue, size: 32)!
+    }
+    
+    static var otp: UIFont {
+        UIFont(name: Fonts.urbanistBold.rawValue, size: 16)!
+    }
+    
+    static var otpTextField: UIFont {
+        UIFont(name: Fonts.urbanistBold.rawValue, size: 24)!
+    }
+    
 }
