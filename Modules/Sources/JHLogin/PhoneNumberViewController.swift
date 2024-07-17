@@ -2,25 +2,11 @@ import UIKit
 import PhoneNumberKit
 import SnapKit
 import DesignKit
-import JHAuth
 
 enum PhoneNumberStrings: String {
     case title = "Log In"
     case subtitle = "Enter your phone number to \ncontinue"
     case continueButton = "Continue"
-}
-
-public final class PhoneNumberViewModel {
-    
-    let authService: AuthService
-    
-    public init(authService: AuthService) {
-        self.authService = authService
-    }
-    
-    public func requestOTP(with phoneNumber: String) async throws{
-        try await authService.requestOTP(forPhoneNumber: phoneNumber)
-    }
 }
 
 public class PhoneNumberViewController: UIViewController {
@@ -36,10 +22,15 @@ public class PhoneNumberViewController: UIViewController {
         
         setupUI()
         configureKeyboard()
+        continueBtn.alpha = 0.25
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+    
+    private func subscribeToTextChange() {
+        NotificationCenter.default.addObserver(self, selector: #selector(textFieldDidChange), name: UITextField.textDidChangeNotification, object: self)
     }
 }
 
@@ -163,6 +154,7 @@ extension PhoneNumberViewController {
         
         let textField = PhoneNumberTextField()
         
+        textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         textField.font = .textField
         textField.textColor = .primary
         textField.textAlignment = .left
@@ -198,6 +190,13 @@ extension PhoneNumberViewController {
         }
         
         self.continueBtn = button
+    }
+}
+
+extension PhoneNumberViewController {
+    @objc func textFieldDidChange() {
+        continueBtn.isEnabled = textField.isValidNumber
+        continueBtn.alpha = textField.isValidNumber ? 1.0 : 0.25
     }
 }
 
