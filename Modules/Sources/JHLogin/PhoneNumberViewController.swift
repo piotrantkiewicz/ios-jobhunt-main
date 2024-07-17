@@ -2,6 +2,7 @@ import UIKit
 import PhoneNumberKit
 import SnapKit
 import DesignKit
+import JHAuth
 
 enum PhoneNumberStrings: String {
     case title = "Log In"
@@ -9,11 +10,26 @@ enum PhoneNumberStrings: String {
     case continueButton = "Continue"
 }
 
+public final class PhoneNumberViewModel {
+    
+    let authService: AuthService
+    
+    public init(authService: AuthService) {
+        self.authService = authService
+    }
+    
+    public func requestOTP(with phoneNumber: String) async throws{
+        try await authService.requestOTP(forPhoneNumber: phoneNumber)
+    }
+}
+
 public class PhoneNumberViewController: UIViewController {
     
     private weak var stackView: UIStackView!
     private weak var textField: PhoneNumberTextField!
     private weak var continueBtn: UIButton!
+    
+    public var viewModel: PhoneNumberViewModel!
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,8 +93,6 @@ extension PhoneNumberViewController {
         setupSubtitle()
         setupTextField()
         setupContinueButton()
-        
-        didTapContinueBtn()
     }
     
     private func setupStackView() {
@@ -191,8 +205,33 @@ extension PhoneNumberViewController {
     
     @objc func didTapContinueBtn() {
         
-        let otpVC = OTPViewController()
-        otpVC.phoneNumber = textField.text ?? ""
-        navigationController?.pushViewController(otpVC, animated: true)
+        guard
+            textField.isValidNumber,
+            let phoneNumber = textField.text else { return }
+        
+        Task { [weak self] in
+            do {
+                try await self?.viewModel.requestOTP(with: phoneNumber)
+                
+                self?.presentOTP()
+            } catch {
+                self?.showError(error.localizedDescription)
+            }
+        }
+    }
+
+    private func presentOTP() {
+        let viewController = OTPViewController()
+        viewController.viewModel = OTPViewModel(authService: viewModel.authService)
+        viewController.phoneNumber = textField.text ?? ""
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+}
+
+extension UIViewController {
+    func showError(_ error: String) {
+        let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default))
+        self.present(alert, animated: true)
     }
 }

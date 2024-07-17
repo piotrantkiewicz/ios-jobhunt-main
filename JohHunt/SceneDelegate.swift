@@ -1,6 +1,7 @@
 import UIKit
+import JHAuth
 import JHLogin
-import DesignKit
+
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -11,7 +12,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
 
+        let authService = AuthServiceLive()
         let phoneNumberController = PhoneNumberViewController()
+        phoneNumberController.viewModel = PhoneNumberViewModel(authService: authService)
         let navigationController = UINavigationController(rootViewController: phoneNumberController)
         navigationController.styleJobHunt()
 

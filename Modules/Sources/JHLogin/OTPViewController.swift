@@ -18,6 +18,7 @@ public class OTPViewController: UIViewController, UITextFieldDelegate {
     private var textFields: [UITextField] = []
     
     var phoneNumber: String = ""
+    var viewModel: OTPViewModel!
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -237,8 +238,8 @@ extension OTPViewController {
         let nextIndex = index + 1
         
         guard nextIndex < textFields.count else {
-//            didTapContinue()
-//            continueBtn.alpha = 1.0
+            didTapSubmitBtn()
+            continueBtn.alpha = 1.0
             return
         }
         
@@ -261,9 +262,37 @@ extension OTPViewController {
         textField.superview?.layer.borderColor = UIColor.clear.cgColor
         textField.superview?.layer.shadowColor = UIColor.clear.cgColor
     }
+}
+
+extension OTPViewController {
+    
+    private func setSubmitBtnDisabled() {
+        continueBtn.alpha = 0.5
+        continueBtn.isEnabled = false
+    }
+    
+    private func setSubmitBtnEnabled() {
+        continueBtn.alpha = 1.0
+        continueBtn.isEnabled = true
+    }
     
     @objc func didTapSubmitBtn() {
+        view.endEditing(true)
+        self.setSubmitBtnDisabled()
         
-        print("submit button tapped")
+        let digits = textFields.map { $0.text ?? "" }
+        
+        Task { [weak self] in
+            do {
+                try await self?.viewModel.verifyOTP(with: digits)
+                
+                let vc = UIViewController()
+                vc.modalPresentationStyle = .fullScreen
+                self?.present(vc, animated: true)
+            } catch {
+                self?.showError(error.localizedDescription)
+                self?.setSubmitBtnEnabled()
+            }
+        }
     }
 }
