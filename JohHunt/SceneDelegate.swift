@@ -1,4 +1,5 @@
 import UIKit
+import JHLogin
 import DesignKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -10,9 +11,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
 
-        let viewController = UIViewController()
-        viewController.view.backgroundColor = .primary
-        let navigationController = UINavigationController(rootViewController: viewController)
+        let phoneNumberController = PhoneNumberViewController()
+        let navigationController = UINavigationController(rootViewController: phoneNumberController)
         navigationController.styleJobHunt()
 
         window?.rootViewController = navigationController

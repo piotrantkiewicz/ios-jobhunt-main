@@ -14,6 +14,7 @@
 		665AF0632C2B1E2F009767CC /* Urbanist-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 665AF0612C2B1E2F009767CC /* Urbanist-Bold.ttf */; };
 		665AF0642C2B1E2F009767CC /* Urbanist-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 665AF0622C2B1E2F009767CC /* Urbanist-Medium.ttf */; };
 		665AF0682C2B1EE1009767CC /* DesignKit in Frameworks */ = {isa = PBXBuildFile; productRef = 665AF0672C2B1EE1009767CC /* DesignKit */; };
+		AEAF37A82C4731C30031094F /* JHLogin in Frameworks */ = {isa = PBXBuildFile; productRef = AEAF37A72C4731C30031094F /* JHLogin */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AEAF37A82C4731C30031094F /* JHLogin in Frameworks */,
 				665AF0682C2B1EE1009767CC /* DesignKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -113,6 +115,7 @@
 			name = JohHunt;
 			packageProductDependencies = (
 				665AF0672C2B1EE1009767CC /* DesignKit */,
+				AEAF37A72C4731C30031094F /* JHLogin */,
 			);
 			productName = JohHunt;
 			productReference = 665AF0482C2B1D17009767CC /* JohHunt.app */;
@@ -315,6 +318,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J7US55UYJ3;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = JohHunt/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -326,7 +330,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = mobileappcoaching.com.JohHunt;
+				PRODUCT_BUNDLE_IDENTIFIER = com.piotrantkiewicz.JohHunt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -341,6 +345,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J7US55UYJ3;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = JohHunt/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -352,7 +357,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = mobileappcoaching.com.JohHunt;
+				PRODUCT_BUNDLE_IDENTIFIER = com.piotrantkiewicz.JohHunt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -387,6 +392,10 @@
 		665AF0672C2B1EE1009767CC /* DesignKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = DesignKit;
+		};
+		AEAF37A72C4731C30031094F /* JHLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = JHLogin;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
