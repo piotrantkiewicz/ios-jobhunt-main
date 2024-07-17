@@ -14,7 +14,7 @@ enum OTPStrings: String {
 public class OTPViewController: UIViewController, UITextFieldDelegate {
     
     private weak var stackView: UIStackView!
-    private weak var continueBtn: UIButton!
+    private weak var submitBtn: UIButton!
     private var textFields: [UITextField] = []
     
     var phoneNumber: String = ""
@@ -25,6 +25,9 @@ public class OTPViewController: UIViewController, UITextFieldDelegate {
         
         setupUI()
         configureKeyboard()
+        
+        submitBtn.alpha = 0.25
+        textFields.first?.becomeFirstResponder()
     }
     
     deinit {
@@ -62,7 +65,7 @@ extension OTPViewController {
         
         let topMargin = isKeyboardHidden ? -40 : -endFrame.height + view.safeAreaInsets.bottom - 20
         
-        continueBtn.snp.updateConstraints { make in
+        submitBtn.snp.updateConstraints { make in
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(topMargin)
         }
         
@@ -226,7 +229,7 @@ extension OTPViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-40)
         }
         
-        self.continueBtn = button
+        self.submitBtn = button
     }
 }
 
@@ -238,8 +241,7 @@ extension OTPViewController {
         let nextIndex = index + 1
         
         guard nextIndex < textFields.count else {
-            didTapSubmitBtn()
-            continueBtn.alpha = 1.0
+            submitBtn.alpha = 1.0
             return
         }
         
@@ -267,13 +269,13 @@ extension OTPViewController {
 extension OTPViewController {
     
     private func setSubmitBtnDisabled() {
-        continueBtn.alpha = 0.5
-        continueBtn.isEnabled = false
+        submitBtn.alpha = 0.5
+        submitBtn.isEnabled = false
     }
     
     private func setSubmitBtnEnabled() {
-        continueBtn.alpha = 1.0
-        continueBtn.isEnabled = true
+        submitBtn.alpha = 1.0
+        submitBtn.isEnabled = true
     }
     
     @objc func didTapSubmitBtn() {
