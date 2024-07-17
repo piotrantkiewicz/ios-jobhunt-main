@@ -15,7 +15,6 @@
 		665AF0642C2B1E2F009767CC /* Urbanist-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 665AF0622C2B1E2F009767CC /* Urbanist-Medium.ttf */; };
 		665AF0682C2B1EE1009767CC /* DesignKit in Frameworks */ = {isa = PBXBuildFile; productRef = 665AF0672C2B1EE1009767CC /* DesignKit */; };
 		AEAF37A82C4731C30031094F /* JHLogin in Frameworks */ = {isa = PBXBuildFile; productRef = AEAF37A72C4731C30031094F /* JHLogin */; };
-		AECC865D2C4860B000A6A39B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AECC865C2C4860B000A6A39B /* GoogleService-Info.plist */; };
 		AECC86602C48611900A6A39B /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = AECC865F2C48611900A6A39B /* FirebaseAuth */; };
 		AECC86622C48753100A6A39B /* JHAuth in Frameworks */ = {isa = PBXBuildFile; productRef = AECC86612C48753100A6A39B /* JHAuth */; };
 /* End PBXBuildFile section */
@@ -30,7 +29,6 @@
 		665AF0612C2B1E2F009767CC /* Urbanist-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Urbanist-Bold.ttf"; sourceTree = "<group>"; };
 		665AF0622C2B1E2F009767CC /* Urbanist-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Urbanist-Medium.ttf"; sourceTree = "<group>"; };
 		665AF0652C2B1E5E009767CC /* Modules */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Modules; sourceTree = SOURCE_ROOT; };
-		AECC865C2C4860B000A6A39B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,7 +71,6 @@
 				665AF04B2C2B1D17009767CC /* AppDelegate.swift */,
 				665AF04D2C2B1D17009767CC /* SceneDelegate.swift */,
 				665AF0562C2B1D19009767CC /* LaunchScreen.storyboard */,
-				AECC865C2C4860B000A6A39B /* GoogleService-Info.plist */,
 				665AF0592C2B1D19009767CC /* Info.plist */,
 			);
 			path = JohHunt;
@@ -173,7 +170,6 @@
 			files = (
 				665AF0552C2B1D19009767CC /* Assets.xcassets in Resources */,
 				665AF0582C2B1D19009767CC /* Base in Resources */,
-				AECC865D2C4860B000A6A39B /* GoogleService-Info.plist in Resources */,
 				665AF0642C2B1E2F009767CC /* Urbanist-Medium.ttf in Resources */,
 				665AF0632C2B1E2F009767CC /* Urbanist-Bold.ttf in Resources */,
 			);
