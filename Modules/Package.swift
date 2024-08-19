@@ -14,18 +14,40 @@ let package = Package(
             targets: ["JHAuth"]
         ),
         .library(
+            name: "JHCore",
+            targets: ["JHCore"]
+        ),
+        .library(
             name: "JHLogin",
             targets: ["JHLogin"]
-        )
+        ),
+        .library(
+            name: "JHAccount",
+            targets: ["JHAccount"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/firebase/firebase-ios-sdk.git", from: "10.29.0"),
         .package(url: "https://github.com/marmelroy/PhoneNumberKit", from: "3.7.0"),
-        .package(url: "https://github.com/SnapKit/SnapKit.git", .upToNextMajor(from: "5.0.1"))
+        .package(url: "https://github.com/SnapKit/SnapKit.git", .upToNextMajor(from: "5.0.1")),
+        .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.1.0"),
     ],
     targets: [
         .target(
             name: "DesignKit",
+            resources: [
+                .process("Resources")
+            ]
+        ),
+        .target(
+            name: "JHAccount",
+            dependencies: [
+                "DesignKit",
+                "JHAuth",
+                "JHCore",
+                "SnapKit",
+                "SDWebImage",
+            ],
             resources: [
                 .process("Resources")
             ]
@@ -40,12 +62,16 @@ let package = Package(
             ]
         ),
         .target(
+            name: "JHCore"
+        ),
+        .target(
             name: "JHLogin",
             dependencies: [
                 "JHAuth",
+                "JHCore",
                 "DesignKit",
                 "PhoneNumberKit",
-                "SnapKit"
+                "SnapKit",
             ],
             resources: [
                 .process("Resources")
