@@ -17,6 +17,7 @@ public final class AccountViewController: UIViewController {
     private func configureTableView() {
         tableView.separatorStyle = .none
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.register(AccountHeaderCell.self, forCellReuseIdentifier: AccountHeaderCell.identifier)
     }
 }
@@ -34,6 +35,7 @@ extension AccountViewController {
         navigationController?.navigationBar.largeTitleTextAttributes = [
             .font: UIFont.title3
         ]
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
     }
     
     private func setupTableView() {
@@ -66,6 +68,22 @@ extension AccountViewController: UITableViewDataSource {
         return cell
     }
 }
+
+extension AccountViewController: UITableViewDelegate {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        presentProfileEdit()
+    }
+    
+    private func presentProfileEdit() {
+        let controller = ProfileEditViewController()
+        navigationController?.pushViewController(controller, animated: true)
+    }
+}
+
+
+
+
+
 
 
 

@@ -1,15 +1,16 @@
 import UIKit
 
 public extension UINavigationController {
-    func styleJobHunt() {
-        navigationBar.tintColor = .primary
+    static func styleJobHunt() {
+        let appearance = UINavigationBar.appearance()
+
+        appearance.tintColor = .accent
 
         let image = UIImage(resource: .angleArrowLeft)
 
-        navigationBar.backIndicatorImage = image
-        navigationBar.backIndicatorTransitionMaskImage = image
+        appearance.backIndicatorImage = image
+        appearance.backIndicatorTransitionMaskImage = image
 
-        navigationBar.topItem?.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        appearance.topItem?.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 }
-

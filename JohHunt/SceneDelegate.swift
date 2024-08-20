@@ -1,4 +1,5 @@
 import UIKit
+import DesignKit
 import JHAuth
 import JHCore
 import JHLogin
@@ -13,9 +14,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
         
+        UINavigationController.styleJobHunt()
         let controller = setupInitialViewController()
         let navigationController = UINavigationController(rootViewController: controller)
-        navigationController.styleJobHunt()
 
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
