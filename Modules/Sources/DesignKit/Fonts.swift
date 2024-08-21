@@ -32,6 +32,10 @@ public extension UIFont {
         UIFont(name: Fonts.urbanistRegular.rawValue, size: 14)!
     }
     
+    static var subtitle3: UIFont {
+        UIFont(name: Fonts.urbanistBold.rawValue, size: 14)!
+    }
+    
     static var textField: UIFont {
         UIFont(name: Fonts.urbanistMedium.rawValue, size: 16)!
     }

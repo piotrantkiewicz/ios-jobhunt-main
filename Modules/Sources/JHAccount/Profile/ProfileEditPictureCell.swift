@@ -8,6 +8,8 @@ class ProfileEditPictureCell: UITableViewCell {
     private var companyImageView: UIImageView!
     private var changeCompanyImageBtn: UIButton!
     
+    var didTap: (()->())?
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         commonInit()
@@ -85,7 +87,7 @@ extension ProfileEditPictureCell {
     
     @objc
     private func didTapBtn() {
-        
+        didTap?()
     }
 }
 
