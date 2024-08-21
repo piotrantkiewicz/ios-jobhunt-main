@@ -20,10 +20,11 @@ class ProfileTextFieldCell: UITableViewCell {
         }
     }
     
-    private var companyNameLbl: UILabel!
-    private var containerView: UIView!
-    private var textField: UITextField!
-    private var spacer: UIView!
+    weak var textField: UITextField!
+    
+    private weak var companyNameLbl: UILabel!
+    private weak var containerView: UIView!
+    private weak var spacer: UIView!
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)

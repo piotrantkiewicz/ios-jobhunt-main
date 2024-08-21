@@ -4,9 +4,9 @@ import SnapKit
 
 class ProfileEditPictureCell: UITableViewCell {
     
-    private var companyImageLbl: UILabel!
-    private var companyImageView: UIImageView!
-    private var changeCompanyImageBtn: UIButton!
+    private weak var companyImageLbl: UILabel!
+    private weak var companyImageView: UIImageView!
+    private weak var changeCompanyImageBtn: UIButton!
     
     var didTap: (()->())?
     
@@ -18,6 +18,12 @@ class ProfileEditPictureCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         commonInit()
+    }
+    
+    func configure(with image: UIImage?) {
+        if let image {
+            companyImageView.image = image
+        }
     }
     
     private func commonInit() {
@@ -80,6 +86,8 @@ extension ProfileEditPictureCell {
         image.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(36)
+            make.height.equalTo(120)
+            make.width.equalTo(120)
         }
         
         self.companyImageView = image

@@ -1,6 +1,12 @@
 import UIKit
 import SnapKit
 
+public final class ProfileEditViewModel {
+    
+    var selectedImage: UIImage?
+    var companyName: String = ""
+}
+
 public final class ProfileEditViewController: UIViewController {
     
     enum Row: Int, CaseIterable {
@@ -10,6 +16,8 @@ public final class ProfileEditViewController: UIViewController {
     }
     
     private weak var tableView: UITableView!
+    
+    let viewModel = ProfileEditViewModel()
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,6 +83,8 @@ extension ProfileEditViewController: UITableViewDataSource {
         case .profilePicture:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileEditPictureCell.identifier, for: indexPath) as? ProfileEditPictureCell else { return UITableViewCell() }
             
+            cell.configure(with: viewModel.selectedImage)
+            
             cell.didTap = { [weak self] in
                 self?.didTapProfilePicture()
             }
@@ -83,6 +93,8 @@ extension ProfileEditViewController: UITableViewDataSource {
             
         case .companyName:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileTextFieldCell.identifier, for: indexPath) as? ProfileTextFieldCell else { return UITableViewCell() }
+            
+            cell.textField.delegate = self
             
             cell.configure(with: .companyName())
             
@@ -133,16 +145,61 @@ extension ProfileEditViewController: UITableViewDelegate {
             break
         }
     }
-    
-    private func didTapProfilePicture() {
-        print("didTapProfilePicture")
-    }
+
     
     private func didSaveChanges() {
         print("didSaveChanges")
     }
 }
 
+extension ProfileEditViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+
+    private func didTapProfilePicture() {
+        let alert = UIAlertController(title: "Select Option", message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { [weak self] _ in
+            self?.showImagePicker(with: .photoLibrary)
+        }))
+        alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { [weak self] _ in
+            self?.showImagePicker(with: .camera)
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        self.present(alert, animated: true)
+    }
+    
+    private func showImagePicker(with sourceType: UIImagePickerController.SourceType) {
+        guard UIImagePickerController.isSourceTypeAvailable(sourceType) else { return }
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = sourceType
+        present(imagePicker, animated: true)
+    }
+    
+    public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
+    
+    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let selectedImage = info[.originalImage] as? UIImage {
+            viewModel.selectedImage = selectedImage
+            
+            tableView.reloadRows(
+                at: [
+                    IndexPath(row: Row.profilePicture.rawValue, section: 0)
+                ],
+                with: .automatic
+            )
+        }
+        picker.dismiss(animated: true)
+    }
+}
+
+extension ProfileEditViewController: UITextFieldDelegate {
+    
+    public func textFieldDidEndEditing(_ textField: UITextField) {
+        viewModel.companyName = textField.text ?? ""
+    }
+}
 
 
 

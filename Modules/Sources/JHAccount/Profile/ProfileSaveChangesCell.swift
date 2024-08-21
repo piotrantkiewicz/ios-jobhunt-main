@@ -4,7 +4,7 @@ import SnapKit
 
 class ProfileSaveChangesCell: UITableViewCell {
     
-    private var saveChangesBtn: UIButton!
+    private weak var saveChangesBtn: UIButton!
     
     var didTap: (()->())?
     
