@@ -18,6 +18,7 @@ class TabBarController: UITabBarController {
     private func setupUI() {
         view.backgroundColor = .white
         tabBar.barTintColor = .white
+        tabBar.tintColor = .accent
     }
     
     private func setupViewControllers() {
