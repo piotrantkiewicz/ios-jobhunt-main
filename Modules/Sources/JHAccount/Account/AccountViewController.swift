@@ -4,6 +4,16 @@ import JHCore
 
 public final class AccountViewController: UIViewController {
     
+    enum Row: Int, CaseIterable {
+        case header
+        case notification
+        case theme
+        case helpCenter
+        case rateOurApp
+        case termOfService
+        case logout
+    }
+    
     private weak var tableView: UITableView!
     
     let viewModel = AccountViewModel()
@@ -19,6 +29,8 @@ public final class AccountViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(AccountHeaderCell.self, forCellReuseIdentifier: AccountHeaderCell.identifier)
+        tableView.register(AccountOptionCell.self, forCellReuseIdentifier: AccountOptionCell.identifier)
+        tableView.register(AccountLogoutCell.self, forCellReuseIdentifier: AccountLogoutCell.identifier)
     }
 }
 
@@ -56,28 +68,95 @@ extension AccountViewController {
 extension AccountViewController: UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+        Row.allCases.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: AccountHeaderCell.identifier, for: indexPath) as? AccountHeaderCell
-        else { return UITableViewCell() }
         
-        cell.configure(with: viewModel.header)
+        guard let row = Row(rawValue: indexPath.row) else { return UITableViewCell() }
         
-        return cell
+        switch row {
+            
+        case .header:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: AccountHeaderCell.identifier, for: indexPath) as? AccountHeaderCell
+            else { return UITableViewCell() }
+            
+            cell.configure(with: viewModel.header)
+            
+            return cell
+        case .notification:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: AccountOptionCell.identifier, for: indexPath) as? AccountOptionCell
+            else { return UITableViewCell() }
+            
+            cell.configure(with: .notification())
+            
+            return cell
+        case .theme:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: AccountOptionCell.identifier, for: indexPath) as? AccountOptionCell
+            else { return UITableViewCell() }
+            
+            cell.configure(with: .theme())
+            
+            return cell
+        case .helpCenter:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: AccountOptionCell.identifier, for: indexPath) as? AccountOptionCell
+            else { return UITableViewCell() }
+            
+            cell.configure(with: .helpCenter())
+            
+            return cell
+        case .rateOurApp:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: AccountOptionCell.identifier, for: indexPath) as? AccountOptionCell
+            else { return UITableViewCell() }
+            
+            cell.configure(with: .rateOurApp())
+            
+            return cell
+        case .termOfService:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: AccountOptionCell.identifier, for: indexPath) as? AccountOptionCell
+            else { return UITableViewCell() }
+            
+            cell.configure(with: .termOfService())
+            
+            return cell
+        case .logout:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: AccountLogoutCell.identifier, for: indexPath) as? AccountLogoutCell
+            else { return UITableViewCell() }
+            
+            cell.configure(with: .logout())
+            
+            return cell
+        }
     }
 }
 
 extension AccountViewController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        presentProfileEdit()
+        guard let row = Row(rawValue: indexPath.row) else { return }
+        
+        switch row {
+        case .header:
+            presentProfileEdit()
+        case .logout:
+            print("logout")
+        default:
+            break
+        }
     }
     
     private func presentProfileEdit() {
         let controller = ProfileEditViewController()
         controller.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch Row(rawValue: indexPath.row)! {
+        case .header:
+            return 88
+        default:
+            return 56
+        }
     }
 }
 

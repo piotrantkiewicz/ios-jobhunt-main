@@ -24,6 +24,10 @@ public extension UIFont {
         UIFont(name: Fonts.urbanistBold.rawValue, size: 20)!
     }
     
+    static var title5: UIFont {
+        UIFont(name: Fonts.urbanistBold.rawValue, size: 16)!
+    }
+    
     static var subtitle: UIFont {
         UIFont(name: Fonts.urbanistMedium.rawValue, size: 16)!
     }

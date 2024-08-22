@@ -29,4 +29,8 @@ public extension UIColor {
     static var spacer: UIColor {
         UIColor(resource: .spacer)
     }
+    
+    static var logout: UIColor {
+        UIColor(resource: .logout)
+    }
 }
