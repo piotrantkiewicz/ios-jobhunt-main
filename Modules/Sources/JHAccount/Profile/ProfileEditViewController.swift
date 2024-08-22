@@ -12,10 +12,11 @@ public final class ProfileEditViewController: UIViewController {
     enum Row: Int, CaseIterable {
         case profilePicture
         case companyName
-        case saveChanges
+        case companyLocation
     }
     
     private weak var tableView: UITableView!
+    private weak var saveChangesBtn: UIButton!
     
     let viewModel = ProfileEditViewModel()
     
@@ -32,7 +33,6 @@ public final class ProfileEditViewController: UIViewController {
         tableView.delegate = self
         tableView.register(ProfileEditPictureCell.self, forCellReuseIdentifier: ProfileEditPictureCell.identifier)
         tableView.register(ProfileTextFieldCell.self, forCellReuseIdentifier: ProfileTextFieldCell.identifier)
-        tableView.register(ProfileSaveChangesCell.self, forCellReuseIdentifier: ProfileSaveChangesCell.identifier)
     }
     
     private func setupNavigationTitle() {
@@ -100,12 +100,12 @@ extension ProfileEditViewController: UITableViewDataSource {
             
             return cell
             
-        case .saveChanges:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileSaveChangesCell.identifier, for: indexPath) as? ProfileSaveChangesCell else { return UITableViewCell() }
+        case .companyLocation:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileTextFieldCell.identifier, for: indexPath) as? ProfileTextFieldCell else { return UITableViewCell() }
             
-            cell.didTap = { [weak self] in
-                self?.didSaveChanges()
-            }
+            cell.textField.delegate = self
+            
+            cell.configure(with: .companyLocation())
             
             return cell
         }
@@ -121,6 +121,15 @@ extension ProfileTextFieldCell.Model {
             text: text
         )
     }
+    
+    static func companyLocation(text: String? = nil) -> Self {
+        Self(
+            placeholder: ProfileEditStrings.companyLocationPlaceholder.rawValue,
+            header: ProfileEditStrings.companyLocationLbl.rawValue,
+            text: text
+        )
+    }
+
 }
 
 extension ProfileEditViewController: UITableViewDelegate {
@@ -130,8 +139,8 @@ extension ProfileEditViewController: UITableViewDelegate {
             return 156
         case .companyName:
             return 140
-        case .saveChanges:
-            return 56
+        case .companyLocation:
+            return 140
         }
     }
     
@@ -139,16 +148,9 @@ extension ProfileEditViewController: UITableViewDelegate {
         switch Row(rawValue: indexPath.row) {
         case .profilePicture:
             didTapProfilePicture()
-        case .saveChanges:
-            didSaveChanges()
         default:
             break
         }
-    }
-
-    
-    private func didSaveChanges() {
-        print("didSaveChanges")
     }
 }
 
