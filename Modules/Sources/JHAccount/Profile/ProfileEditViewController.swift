@@ -25,6 +25,8 @@ public final class ProfileEditViewController: UIViewController {
         setupUI()
         configureTableView()
         setupNavigationTitle()
+        setupHideKeyboardGesture()
+        subscribeToKeyboard()
     }
     
     private func configureTableView() {
@@ -63,10 +65,11 @@ extension ProfileEditViewController {
             make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
             make.left.equalToSuperview().offset(20)
             make.right.equalToSuperview().offset(-20)
-            make.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.bottom.equalToSuperview()
         }
         
         self.tableView = tableView
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 120, right: 0)
     }
     
     private func setupSaveChangesBtn() {
@@ -86,6 +89,7 @@ extension ProfileEditViewController {
             make.height.equalTo(56)
             make.left.equalToSuperview()
             make.right.equalToSuperview()
+            make.bottom.equalToSuperview()
         }
         
         view.addSubview(container)
@@ -239,6 +243,61 @@ extension ProfileEditViewController: UITextFieldDelegate {
     
     public func textFieldDidEndEditing(_ textField: UITextField) {
         viewModel.companyName = textField.text ?? ""
+    }
+}
+
+extension ProfileEditViewController {
+    private func setupHideKeyboardGesture() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: #selector(dismissKeyboard)
+        )
+        tap.cancelsTouchesInView = false
+        
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+    private func subscribeToKeyboard() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+    
+    @objc private func keyboardWillShow(notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let endFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect,
+              let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
+        else { return }
+        
+        let isKeyboardHidden = endFrame.origin.y >= UIScreen.main.bounds.size.height
+        
+        let bottomMargin = isKeyboardHidden ? 0 : -endFrame.height - 16
+        
+        tableView.snp.updateConstraints { make in
+            make.bottom.equalToSuperview().offset(bottomMargin)
+        }
+        
+        saveChangesContainer.snp.updateConstraints { make in
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(bottomMargin - 20 + (isKeyboardHidden ? 0 : view.safeAreaInsets.bottom))
+        }
+        
+        UIView.animate(withDuration: duration) {
+            self.view.layoutIfNeeded()
+        }
     }
 }
 
