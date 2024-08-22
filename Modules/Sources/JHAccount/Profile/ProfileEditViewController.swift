@@ -16,7 +16,7 @@ public final class ProfileEditViewController: UIViewController {
     }
     
     private weak var tableView: UITableView!
-    private weak var saveChangesContainer: UIView!
+    private weak var saveChangesBtn: UIButton!
     
     let viewModel = ProfileEditViewModel()
     
@@ -73,8 +73,6 @@ extension ProfileEditViewController {
     }
     
     private func setupSaveChangesBtn() {
-        let container = UIView()
-        
         let button = UIButton()
         button.titleLabel?.font = .button
         button.backgroundColor = .accent
@@ -84,26 +82,16 @@ extension ProfileEditViewController {
         button.setTitleColor(.white, for: .highlighted)
         button.setTitleColor(.white, for: .selected)
         button.setTitle(ProfileEditStrings.saveChangesBtn.rawValue, for: .normal)
-        container.addSubview(button)
+        button.addTarget(self, action: #selector(didTapSaveChangesBtn), for: .touchUpInside)
+        view.addSubview(button)
         button.snp.makeConstraints { make in
             make.height.equalTo(56)
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
-            make.bottom.equalToSuperview()
-        }
-        
-        view.addSubview(container)
-        
-        container.snp.makeConstraints { make in
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-54)
             make.left.equalToSuperview().offset(20)
             make.right.equalToSuperview().offset(-20)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-20)
         }
         
-        self.saveChangesContainer = container
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(didTapSaveChangesBtn))
-        container.addGestureRecognizer(tap)
+        self.saveChangesBtn = button
     }
     
     @objc
@@ -291,7 +279,7 @@ extension ProfileEditViewController {
             make.bottom.equalToSuperview().offset(bottomMargin)
         }
         
-        saveChangesContainer.snp.updateConstraints { make in
+        saveChangesBtn.snp.updateConstraints { make in
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(bottomMargin - 20 + (isKeyboardHidden ? 0 : view.safeAreaInsets.bottom))
         }
         
