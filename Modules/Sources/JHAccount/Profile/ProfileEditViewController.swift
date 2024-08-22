@@ -16,7 +16,7 @@ public final class ProfileEditViewController: UIViewController {
     }
     
     private weak var tableView: UITableView!
-    private weak var saveChangesBtn: UIButton!
+    private weak var saveChangesContainer: UIView!
     
     let viewModel = ProfileEditViewModel()
     
@@ -48,6 +48,7 @@ extension ProfileEditViewController {
     private func setupUI() {
         configureNavigationItem()
         setupTableView()
+        setupSaveChangesBtn()
     }
     
     private func configureNavigationItem() {
@@ -66,6 +67,44 @@ extension ProfileEditViewController {
         }
         
         self.tableView = tableView
+    }
+    
+    private func setupSaveChangesBtn() {
+        let container = UIView()
+        
+        let button = UIButton()
+        button.titleLabel?.font = .button
+        button.backgroundColor = .accent
+        button.layer.cornerRadius = 28
+        button.layer.masksToBounds = true
+        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.white, for: .highlighted)
+        button.setTitleColor(.white, for: .selected)
+        button.setTitle(ProfileEditStrings.saveChangesBtn.rawValue, for: .normal)
+        container.addSubview(button)
+        button.snp.makeConstraints { make in
+            make.height.equalTo(56)
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
+        }
+        
+        view.addSubview(container)
+        
+        container.snp.makeConstraints { make in
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-54)
+            make.left.equalToSuperview().offset(20)
+            make.right.equalToSuperview().offset(-20)
+        }
+        
+        self.saveChangesContainer = container
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didTapSaveChangesBtn))
+        container.addGestureRecognizer(tap)
+    }
+    
+    @objc
+    private func didTapSaveChangesBtn() {
+        print("didTapSaveChangesBtn")
     }
 }
 

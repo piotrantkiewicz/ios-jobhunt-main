@@ -76,6 +76,7 @@ extension AccountViewController: UITableViewDelegate {
     
     private func presentProfileEdit() {
         let controller = ProfileEditViewController()
+        controller.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(controller, animated: true)
     }
 }
