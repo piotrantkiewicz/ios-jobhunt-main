@@ -1,5 +1,6 @@
 import UIKit
 import JHAuth
+import JHCore
 
 public final class AccountViewModel {
     
@@ -13,13 +14,16 @@ public final class AccountViewModel {
     
     var didUpdateHeader: (() -> ())?
     
+    let authService: AuthService
     let userRepository: UserProfileRepository
     let profilePictureRepository: ProfilePictureRepository
     
     public init(
+        authService: AuthService,
         userRepository: UserProfileRepository,
         profilePictureRepository: ProfilePictureRepository
     ) {
+        self.authService = authService
         self.userRepository = userRepository
         self.profilePictureRepository = profilePictureRepository
         
@@ -28,6 +32,16 @@ public final class AccountViewModel {
             companyName: "Company",
             location: "Location not specified"
         )
+    }
+    
+    private func updateHeader(with userProfile: UserProfile) {
+        header = Header(
+            imageUrl: userProfile.profilePictureUrl,
+            companyName: userProfile.companyName,
+            location: userProfile.companyLocation
+        )
+        
+        didUpdateHeader?()
     }
     
     func fetchUserProfile() {
@@ -45,14 +59,9 @@ public final class AccountViewModel {
         }
     }
     
-    private func updateHeader(with userProfile: UserProfile) {
-        header = Header(
-            imageUrl: userProfile.profilePictureUrl,
-            companyName: userProfile.companyName,
-            location: userProfile.companyLocation
-        )
-        
-        didUpdateHeader?()
+    func logout() throws {
+        try authService.logout()
+        NotificationCenter.default.post(.didLogout)
     }
 }
 

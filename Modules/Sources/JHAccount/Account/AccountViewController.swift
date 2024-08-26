@@ -148,9 +148,41 @@ extension AccountViewController: UITableViewDelegate {
         case .header:
             presentProfileEdit()
         case .logout:
-            print("logout")
+            didRequestLogout()
         default:
             break
+        }
+    }
+    
+    private func didRequestLogout() {
+        let alert = UIAlertController(
+            title: "Logout",
+            message: "Are you sure you want to logout?",
+            preferredStyle: .actionSheet
+        )
+        alert.addAction(
+            UIAlertAction(
+                title: "Confirm",
+                style: .default,
+                handler: { [weak self] _ in
+                    self?.didConfirmLogout()
+                }
+            )
+        )
+        alert.addAction(
+            UIAlertAction(
+                title: "Cancel",
+                style: .cancel
+            )
+        )
+        present(alert, animated: true)
+    }
+    
+    private func didConfirmLogout() {
+        do {
+            try viewModel.logout()
+        } catch {
+            showError(error.localizedDescription)
         }
     }
     

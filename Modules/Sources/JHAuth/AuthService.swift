@@ -19,6 +19,7 @@ public protocol AuthService {
     
     func requestOTP(forPhoneNumber phoneNumber: String) async throws
     func authenticate(with otp: String) async throws -> User
+    func logout() throws
 }
 
 public class AuthServiceLive: AuthService {
@@ -56,4 +57,17 @@ public class AuthServiceLive: AuthService {
         
         return User(uid: result.user.uid)
     }
+    
+    public func logout() throws {
+        try Auth.auth().signOut()
+    }
 }
+
+
+
+
+
+
+
+
+
