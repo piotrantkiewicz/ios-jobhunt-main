@@ -2,6 +2,7 @@ import UIKit
 import PhoneNumberKit
 import SnapKit
 import DesignKit
+import JHCore
 
 enum PhoneNumberStrings: String {
     case title = "Log In"
@@ -224,13 +225,5 @@ extension PhoneNumberViewController {
         viewController.viewModel = OTPViewModel(authService: viewModel.authService)
         viewController.phoneNumber = textField.text ?? ""
         navigationController?.pushViewController(viewController, animated: true)
-    }
-}
-
-extension UIViewController {
-    func showError(_ error: String) {
-        let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default))
-        self.present(alert, animated: true)
     }
 }

@@ -1,11 +1,6 @@
 import UIKit
 import SnapKit
-
-public final class ProfileEditViewModel {
-    
-    var selectedImage: UIImage?
-    var companyName: String = ""
-}
+import JHCore
 
 public final class ProfileEditViewController: UIViewController {
     
@@ -18,7 +13,7 @@ public final class ProfileEditViewController: UIViewController {
     private weak var tableView: UITableView!
     private weak var saveChangesBtn: UIButton!
     
-    let viewModel = ProfileEditViewModel()
+    var viewModel: ProfileEditViewModel!
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,7 +91,14 @@ extension ProfileEditViewController {
     
     @objc
     private func didTapSaveChangesBtn() {
-        print("didTapSaveChangesBtn")
+        view.endEditing(true)
+        
+        do {
+           try viewModel.save()
+            navigationController?.popViewController(animated: true)
+        } catch {
+            showError(error.localizedDescription)
+        }
     }
 }
 
@@ -127,7 +129,7 @@ extension ProfileEditViewController: UITableViewDataSource {
             
             cell.textField.delegate = self
             
-            cell.configure(with: .companyName())
+            cell.configure(with: .companyName(text: viewModel.companyName))
             
             return cell
             
@@ -136,7 +138,7 @@ extension ProfileEditViewController: UITableViewDataSource {
             
             cell.textField.delegate = self
             
-            cell.configure(with: .companyLocation())
+            cell.configure(with: .companyLocation(text: viewModel.companyLocation))
             
             return cell
         }
@@ -228,9 +230,20 @@ extension ProfileEditViewController: UIImagePickerControllerDelegate, UINavigati
 }
 
 extension ProfileEditViewController: UITextFieldDelegate {
-    
     public func textFieldDidEndEditing(_ textField: UITextField) {
-        viewModel.companyName = textField.text ?? ""
+        guard
+            let indexPath = tableView.indexPathForRow(at: textField.convert(textField.bounds.origin, to: tableView)),
+            let row = Row(rawValue: indexPath.row)
+        else { return }
+
+        switch row {
+        case .companyName:
+            viewModel.companyName = textField.text ?? ""
+        case .companyLocation:
+            viewModel.companyLocation = textField.text ?? ""
+        default:
+            break
+        }
     }
 }
 

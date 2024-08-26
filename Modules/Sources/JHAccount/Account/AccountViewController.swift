@@ -16,12 +16,22 @@ public final class AccountViewController: UIViewController {
     
     private weak var tableView: UITableView!
     
-    let viewModel = AccountViewModel()
+    public var viewModel: AccountViewModel!
     
     public override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         configureTableView()
+        
+        viewModel.didUpdateHeader = { [weak self] in
+            self?.tableView.reloadData()
+        }
+    }
+    
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        viewModel.fetchUserProfile()
     }
     
     private func configureTableView() {
@@ -88,42 +98,42 @@ extension AccountViewController: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: AccountOptionCell.identifier, for: indexPath) as? AccountOptionCell
             else { return UITableViewCell() }
             
-            cell.configure(with: .notification())
+            cell.configure(with: .notification)
             
             return cell
         case .theme:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: AccountOptionCell.identifier, for: indexPath) as? AccountOptionCell
             else { return UITableViewCell() }
             
-            cell.configure(with: .theme())
+            cell.configure(with: .theme)
             
             return cell
         case .helpCenter:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: AccountOptionCell.identifier, for: indexPath) as? AccountOptionCell
             else { return UITableViewCell() }
             
-            cell.configure(with: .helpCenter())
+            cell.configure(with: .helpCenter)
             
             return cell
         case .rateOurApp:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: AccountOptionCell.identifier, for: indexPath) as? AccountOptionCell
             else { return UITableViewCell() }
             
-            cell.configure(with: .rateOurApp())
+            cell.configure(with: .rateOurApp)
             
             return cell
         case .termOfService:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: AccountOptionCell.identifier, for: indexPath) as? AccountOptionCell
             else { return UITableViewCell() }
             
-            cell.configure(with: .termOfService())
+            cell.configure(with: .termOfService)
             
             return cell
         case .logout:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: AccountLogoutCell.identifier, for: indexPath) as? AccountLogoutCell
             else { return UITableViewCell() }
             
-            cell.configure(with: .logout())
+            cell.configure(with: .logout)
             
             return cell
         }
@@ -145,8 +155,10 @@ extension AccountViewController: UITableViewDelegate {
     }
     
     private func presentProfileEdit() {
+        let viewModel = ProfileEditViewModel(userRepository: viewModel.userRepository)
         let controller = ProfileEditViewController()
         controller.hidesBottomBarWhenPushed = true
+        controller.viewModel = viewModel
         navigationController?.pushViewController(controller, animated: true)
     }
     

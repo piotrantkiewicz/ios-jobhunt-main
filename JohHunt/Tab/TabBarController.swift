@@ -1,6 +1,7 @@
 import UIKit
 import DesignKit
 import JHAccount
+import JHAuth
 
 class TabBarController: UITabBarController {
     
@@ -31,18 +32,39 @@ class TabBarController: UITabBarController {
         let messages = UIViewController()
         messages.tabBarItem = Tab.messages.tabBarItem
         
-        let account = AccountViewController()
-        let accountNav = UINavigationController(rootViewController: account)
-        account.tabBarItem = Tab.account.tabBarItem
-        account.title = Tab.account.tabBarItem.title
+        let account = setupAccount()
         
         viewControllers = [
             home,
             jobs,
             messages,
-            accountNav
+            account
         ]
         
-        selectedViewController = accountNav
+        selectedViewController = account
+    }
+    
+    private func setupAccount() -> UIViewController {
+        
+        let authService = AuthServiceLive()
+        let userRepository = UserProfileRepositoryLive(authService: authService)
+        let viewModel = AccountViewModel(userRepository: userRepository)
+        let account = AccountViewController()
+        account.viewModel = viewModel
+        
+        let accountNav = UINavigationController(rootViewController: account)
+        account.tabBarItem = Tab.account.tabBarItem
+        account.title = Tab.account.tabBarItem.title
+        
+        return accountNav
     }
 }
+
+
+
+
+
+
+
+
+

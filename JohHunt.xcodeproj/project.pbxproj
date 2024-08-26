@@ -20,9 +20,9 @@
 		AE8025092C638E27007B95A6 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8025082C638E27007B95A6 /* TabBarController.swift */; };
 		AE80250C2C639363007B95A6 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE80250B2C639363007B95A6 /* Tab.swift */; };
 		AEAF37A82C4731C30031094F /* JHLogin in Frameworks */ = {isa = PBXBuildFile; productRef = AEAF37A72C4731C30031094F /* JHLogin */; };
+		AEC7CECA2C788DD700F0E5B6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AEC7CEC92C788DD700F0E5B6 /* GoogleService-Info.plist */; };
 		AECC86602C48611900A6A39B /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = AECC865F2C48611900A6A39B /* FirebaseAuth */; };
 		AECC86622C48753100A6A39B /* JHAuth in Frameworks */ = {isa = PBXBuildFile; productRef = AECC86612C48753100A6A39B /* JHAuth */; };
-		AECC86642C487B3800A6A39B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AECC86632C487B3800A6A39B /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,7 +38,7 @@
 		AE735F572C64EA6500CBFCA2 /* Urbanist-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Urbanist-Regular.ttf"; sourceTree = "<group>"; };
 		AE8025082C638E27007B95A6 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		AE80250B2C639363007B95A6 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
-		AECC86632C487B3800A6A39B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		AEC7CEC92C788DD700F0E5B6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,7 +84,7 @@
 				665AF04D2C2B1D17009767CC /* SceneDelegate.swift */,
 				AE80250A2C638E2C007B95A6 /* Tab */,
 				665AF0562C2B1D19009767CC /* LaunchScreen.storyboard */,
-				AECC86632C487B3800A6A39B /* GoogleService-Info.plist */,
+				AEC7CEC92C788DD700F0E5B6 /* GoogleService-Info.plist */,
 				665AF0542C2B1D19009767CC /* Assets.xcassets */,
 				665AF0592C2B1D19009767CC /* Info.plist */,
 			);
@@ -196,10 +196,10 @@
 			files = (
 				665AF0552C2B1D19009767CC /* Assets.xcassets in Resources */,
 				665AF0582C2B1D19009767CC /* Base in Resources */,
-				AECC86642C487B3800A6A39B /* GoogleService-Info.plist in Resources */,
 				665AF0642C2B1E2F009767CC /* Urbanist-Medium.ttf in Resources */,
 				665AF0632C2B1E2F009767CC /* Urbanist-Bold.ttf in Resources */,
 				AE735F582C64EA6500CBFCA2 /* Urbanist-Regular.ttf in Resources */,
+				AEC7CECA2C788DD700F0E5B6 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

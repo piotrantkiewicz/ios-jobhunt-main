@@ -1,4 +1,5 @@
 import UIKit
+import JHAuth
 
 public final class AccountViewModel {
     
@@ -8,43 +9,74 @@ public final class AccountViewModel {
         let location: String
     }
     
-    let header: Header
+    var header: Header
     
-    public init() {
+    var didUpdateHeader: (() -> ())?
+    
+    let userRepository: UserProfileRepository
+    
+    public init(userRepository: UserProfileRepository) {
+        self.userRepository = userRepository
+        
         header = Header(
             image: UIImage(resource: .user),
             companyName: "Company",
             location: "Location not specified"
         )
     }
+    
+    func fetchUserProfile() {
+        Task { [weak self] in
+            do {
+                guard let profile = try await self?.userRepository.fetchUserProfile()
+                else { return }
+                
+                await MainActor.run { [weak self] in
+                    self?.updateHeader(with: profile)
+                }
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+    private func updateHeader(with userProfile: UserProfile) {
+        header = Header(
+            image: UIImage(resource: .user),
+            companyName: userProfile.companyName,
+            location: userProfile.companyLocation
+        )
+        
+        didUpdateHeader?()
+    }
 }
 
 extension AccountOptionCell.Model {
-    static func notification(text: String? = nil) -> Self {
+    static var notification: Self {
         Self(
             icon: UIImage(resource: .bell),
             title: "Notification"
         )
     }
-    static func theme(text: String? = nil) -> Self {
+    static var theme: Self {
         Self(
             icon: UIImage(resource: .moon),
             title: "Theme"
         )
     }
-    static func helpCenter(text: String? = nil) -> Self {
+    static var helpCenter: Self {
         Self(
             icon: UIImage(resource: .message),
             title: "Help Center"
         )
     }
-    static func rateOurApp(text: String? = nil) -> Self {
+    static var rateOurApp: Self {
         Self(
             icon: UIImage(resource: .star),
             title: "Rate Our App"
         )
     }
-    static func termOfService(text: String? = nil) -> Self {
+    static var termOfService: Self {
         Self(
             icon: UIImage(resource: .notes),
             title: "Term Of Service"
@@ -53,7 +85,7 @@ extension AccountOptionCell.Model {
 }
 
 extension AccountLogoutCell.Model {
-    static func logout(text: String? = nil) -> Self {
+    static var logout: Self {
         Self(
             icon: UIImage(resource: .logout),
             title: "Logout"
