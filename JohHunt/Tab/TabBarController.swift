@@ -2,8 +2,20 @@ import UIKit
 import DesignKit
 import JHAccount
 import JHAuth
+import Swinject
 
 class TabBarController: UITabBarController {
+    
+    private let container: Container
+    
+    init(container: Container) {
+        self.container = container
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,18 +57,7 @@ class TabBarController: UITabBarController {
     }
     
     private func setupAccount() -> UIViewController {
-        
-        let authService = AuthServiceLive()
-        let userRepository = UserProfileRepositoryLive(authService: authService)
-        let profilePictureRepository = ProfilePictureRepositoryLive(
-            authService: authService,
-            userProfileRepository: userRepository
-        )
-        let viewModel = AccountViewModel(
-            authService: authService,
-            userRepository: userRepository,
-            profilePictureRepository: profilePictureRepository
-        )
+        let viewModel = AccountViewModel(container: container)
         let account = AccountViewController()
         account.viewModel = viewModel
         

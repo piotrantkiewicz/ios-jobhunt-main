@@ -1,6 +1,7 @@
 import UIKit
 import JHAuth
 import JHCore
+import Swinject
 
 public final class AccountViewModel {
     
@@ -14,18 +15,19 @@ public final class AccountViewModel {
     
     var didUpdateHeader: (() -> ())?
     
-    let authService: AuthService
-    let userRepository: UserProfileRepository
-    let profilePictureRepository: ProfilePictureRepository
+    private let authService: AuthService
+    private let userRepository: UserProfileRepository
+    private let profilePictureRepository: ProfilePictureRepository
+    
+    let container: Container
     
     public init(
-        authService: AuthService,
-        userRepository: UserProfileRepository,
-        profilePictureRepository: ProfilePictureRepository
+        container: Container
     ) {
-        self.authService = authService
-        self.userRepository = userRepository
-        self.profilePictureRepository = profilePictureRepository
+        self.container = container
+        self.authService = container.resolve(AuthService.self)!
+        self.userRepository = container.resolve(UserProfileRepository.self)!
+        self.profilePictureRepository = container.resolve(ProfilePictureRepository.self)!
         
         header = Header(
             imageUrl: nil,

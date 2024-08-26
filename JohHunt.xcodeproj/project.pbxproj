@@ -21,6 +21,9 @@
 		AE80250C2C639363007B95A6 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE80250B2C639363007B95A6 /* Tab.swift */; };
 		AEAF37A82C4731C30031094F /* JHLogin in Frameworks */ = {isa = PBXBuildFile; productRef = AEAF37A72C4731C30031094F /* JHLogin */; };
 		AEC7CECA2C788DD700F0E5B6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AEC7CEC92C788DD700F0E5B6 /* GoogleService-Info.plist */; };
+		AEC7CECD2C7C9C7400F0E5B6 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = AEC7CECC2C7C9C7400F0E5B6 /* Swinject */; };
+		AEC7CECF2C7C9C7400F0E5B6 /* Swinject-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = AEC7CECE2C7C9C7400F0E5B6 /* Swinject-Dynamic */; };
+		AEC7CED12C7CC69400F0E5B6 /* Assembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEC7CED02C7CC69400F0E5B6 /* Assembly.swift */; };
 		AECC86602C48611900A6A39B /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = AECC865F2C48611900A6A39B /* FirebaseAuth */; };
 		AECC86622C48753100A6A39B /* JHAuth in Frameworks */ = {isa = PBXBuildFile; productRef = AECC86612C48753100A6A39B /* JHAuth */; };
 /* End PBXBuildFile section */
@@ -39,6 +42,7 @@
 		AE8025082C638E27007B95A6 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		AE80250B2C639363007B95A6 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		AEC7CEC92C788DD700F0E5B6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		AEC7CED02C7CC69400F0E5B6 /* Assembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assembly.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,7 +51,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE3A88952C68DFE90059459D /* JHAccount in Frameworks */,
+				AEC7CECF2C7C9C7400F0E5B6 /* Swinject-Dynamic in Frameworks */,
 				AE735F542C64CC0300CBFCA2 /* JHCore in Frameworks */,
+				AEC7CECD2C7C9C7400F0E5B6 /* Swinject in Frameworks */,
 				AEAF37A82C4731C30031094F /* JHLogin in Frameworks */,
 				AECC86602C48611900A6A39B /* FirebaseAuth in Frameworks */,
 				AECC86622C48753100A6A39B /* JHAuth in Frameworks */,
@@ -82,6 +88,7 @@
 				665AF05F2C2B1E07009767CC /* Resources */,
 				665AF04B2C2B1D17009767CC /* AppDelegate.swift */,
 				665AF04D2C2B1D17009767CC /* SceneDelegate.swift */,
+				AEC7CED02C7CC69400F0E5B6 /* Assembly.swift */,
 				AE80250A2C638E2C007B95A6 /* Tab */,
 				665AF0562C2B1D19009767CC /* LaunchScreen.storyboard */,
 				AEC7CEC92C788DD700F0E5B6 /* GoogleService-Info.plist */,
@@ -148,6 +155,8 @@
 				AECC86612C48753100A6A39B /* JHAuth */,
 				AE735F532C64CC0300CBFCA2 /* JHCore */,
 				AE3A88942C68DFE90059459D /* JHAccount */,
+				AEC7CECC2C7C9C7400F0E5B6 /* Swinject */,
+				AEC7CECE2C7C9C7400F0E5B6 /* Swinject-Dynamic */,
 			);
 			productName = JohHunt;
 			productReference = 665AF0482C2B1D17009767CC /* JohHunt.app */;
@@ -179,6 +188,7 @@
 			mainGroup = 665AF03F2C2B1D17009767CC;
 			packageReferences = (
 				AECC865E2C48611900A6A39B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				AEC7CECB2C7C9C7400F0E5B6 /* XCRemoteSwiftPackageReference "Swinject" */,
 			);
 			productRefGroup = 665AF0492C2B1D17009767CC /* Products */;
 			projectDirPath = "";
@@ -211,6 +221,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE8025092C638E27007B95A6 /* TabBarController.swift in Sources */,
+				AEC7CED12C7CC69400F0E5B6 /* Assembly.swift in Sources */,
 				665AF04C2C2B1D17009767CC /* AppDelegate.swift in Sources */,
 				665AF04E2C2B1D17009767CC /* SceneDelegate.swift in Sources */,
 				AE80250C2C639363007B95A6 /* Tab.swift in Sources */,
@@ -428,6 +439,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		AEC7CECB2C7C9C7400F0E5B6 /* XCRemoteSwiftPackageReference "Swinject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Swinject/Swinject.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.9.1;
+			};
+		};
 		AECC865E2C48611900A6A39B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -454,6 +473,16 @@
 		AEAF37A72C4731C30031094F /* JHLogin */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = JHLogin;
+		};
+		AEC7CECC2C7C9C7400F0E5B6 /* Swinject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AEC7CECB2C7C9C7400F0E5B6 /* XCRemoteSwiftPackageReference "Swinject" */;
+			productName = Swinject;
+		};
+		AEC7CECE2C7C9C7400F0E5B6 /* Swinject-Dynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AEC7CECB2C7C9C7400F0E5B6 /* XCRemoteSwiftPackageReference "Swinject" */;
+			productName = "Swinject-Dynamic";
 		};
 		AECC865F2C48611900A6A39B /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;

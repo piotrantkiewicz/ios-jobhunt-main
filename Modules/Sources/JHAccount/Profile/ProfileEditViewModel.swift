@@ -1,5 +1,6 @@
 import UIKit
 import JHAuth
+import Swinject
 
 public final class ProfileEditViewModel {
     
@@ -10,13 +11,14 @@ public final class ProfileEditViewModel {
     
     private let userRepository: UserProfileRepository
     private let profilePictureRepository: ProfilePictureRepository
+    private let container: Container
     
     init(
-        userRepository: UserProfileRepository,
-        profilePictureRepository: ProfilePictureRepository
+        container: Container
     ) {
-        self.userRepository = userRepository
-        self.profilePictureRepository = profilePictureRepository
+        self.container = container
+        self.userRepository = container.resolve(UserProfileRepository.self)!
+        self.profilePictureRepository = container.resolve(ProfilePictureRepository.self)!
         
         if let profile = userRepository.profile {
             companyName = profile.companyName

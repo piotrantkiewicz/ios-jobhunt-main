@@ -3,16 +3,19 @@ import DesignKit
 import JHAuth
 import JHCore
 import JHLogin
+import Swinject
 
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    var container: Container!
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
+        
+        registerDependencies()
         
         UINavigationController.styleJobHunt()
         let controller = setupInitialViewController()
@@ -27,7 +30,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func setupInitialViewController() -> UIViewController {
-        let authService = AuthServiceLive()
+        let authService: AuthService = container!.resolve(AuthService.self)!
         
         if authService.isAuthenticated {
             return setupTabBar()
@@ -37,10 +40,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func setupPhoneNumberController() -> UIViewController {
-        let authService = AuthServiceLive()
-        
         let phoneNumberController = PhoneNumberViewController()
-        phoneNumberController.viewModel = PhoneNumberViewModel(authService: authService)
+        phoneNumberController.viewModel = PhoneNumberViewModel(container: container)
         return phoneNumberController
     }
 
@@ -92,7 +93,7 @@ extension SceneDelegate {
     }
     
     private func setupTabBar() -> UIViewController {
-        TabBarController()
+        TabBarController(container: container)
     }
 }
 
@@ -113,6 +114,15 @@ extension SceneDelegate {
     }
 }
 
+extension SceneDelegate {
+    
+    private func registerDependencies() {
+        let container = Container()
+        Assembly(container: container).assemble()
+        
+        self.container = container
+    }
+}
 
 
 
