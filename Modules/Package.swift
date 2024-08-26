@@ -47,7 +47,8 @@ let package = Package(
                 "JHCore",
                 "SnapKit",
                 "SDWebImage",
-                .product(name: "FirebaseDatabase", package: "firebase-ios-sdk")
+                .product(name: "FirebaseDatabase", package: "firebase-ios-sdk"),
+                .product(name: "FirebaseStorage", package: "firebase-ios-sdk"),
             ],
             resources: [
                 .process("Resources")

@@ -4,7 +4,7 @@ import JHAuth
 public final class AccountViewModel {
     
     struct Header {
-        let image: UIImage
+        let imageUrl: URL?
         let companyName: String
         let location: String
     }
@@ -14,12 +14,17 @@ public final class AccountViewModel {
     var didUpdateHeader: (() -> ())?
     
     let userRepository: UserProfileRepository
+    let profilePictureRepository: ProfilePictureRepository
     
-    public init(userRepository: UserProfileRepository) {
+    public init(
+        userRepository: UserProfileRepository,
+        profilePictureRepository: ProfilePictureRepository
+    ) {
         self.userRepository = userRepository
+        self.profilePictureRepository = profilePictureRepository
         
         header = Header(
-            image: UIImage(resource: .user),
+            imageUrl: nil,
             companyName: "Company",
             location: "Location not specified"
         )
@@ -42,7 +47,7 @@ public final class AccountViewModel {
     
     private func updateHeader(with userProfile: UserProfile) {
         header = Header(
-            image: UIImage(resource: .user),
+            imageUrl: userProfile.profilePictureUrl,
             companyName: userProfile.companyName,
             location: userProfile.companyLocation
         )

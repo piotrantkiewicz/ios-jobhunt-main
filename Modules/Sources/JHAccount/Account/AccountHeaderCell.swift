@@ -22,7 +22,7 @@ class AccountHeaderCell: UITableViewCell {
     }
     
     func configure(with viewModel: AccountViewModel.Header) {
-        companyImageView.image = viewModel.image
+        companyImageView.sd_setImage(with: viewModel.imageUrl)
         companyLbl.text = viewModel.companyName
         locationLbl.text = viewModel.location
     }
@@ -84,9 +84,9 @@ extension AccountHeaderCell {
     
     private func setupImageView() {
         let imageView = UIImageView()
+        imageView.image = UIImage(resource: .user)
         imageView.layer.cornerRadius = 24
         imageView.layer.masksToBounds = true
-        imageView.image = UIImage(resource: .user)
         imageView.contentMode = .scaleAspectFill
         stackView.addArrangedSubview(imageView)
         

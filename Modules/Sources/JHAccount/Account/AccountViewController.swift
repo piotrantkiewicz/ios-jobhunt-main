@@ -155,7 +155,10 @@ extension AccountViewController: UITableViewDelegate {
     }
     
     private func presentProfileEdit() {
-        let viewModel = ProfileEditViewModel(userRepository: viewModel.userRepository)
+        let viewModel = ProfileEditViewModel(
+            userRepository: viewModel.userRepository,
+            profilePictureRepository: viewModel.profilePictureRepository
+        )
         let controller = ProfileEditViewController()
         controller.hidesBottomBarWhenPushed = true
         controller.viewModel = viewModel

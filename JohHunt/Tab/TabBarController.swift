@@ -48,7 +48,14 @@ class TabBarController: UITabBarController {
         
         let authService = AuthServiceLive()
         let userRepository = UserProfileRepositoryLive(authService: authService)
-        let viewModel = AccountViewModel(userRepository: userRepository)
+        let profilePictureRepository = ProfilePictureRepositoryLive(
+            authService: authService,
+            userProfileRepository: userRepository
+        )
+        let viewModel = AccountViewModel(
+            userRepository: userRepository,
+            profilePictureRepository: profilePictureRepository
+        )
         let account = AccountViewController()
         account.viewModel = viewModel
         
