@@ -26,4 +26,11 @@ public extension UIColor {
         UIColor(resource: .dropShadow)
     }
 
+    static var spacer: UIColor {
+        UIColor(resource: .spacer)
+    }
+    
+    static var logout: UIColor {
+        UIColor(resource: .logout)
+    }
 }

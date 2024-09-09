@@ -1,5 +1,6 @@
 import UIKit
 import JHAuth
+import Swinject
 
 enum OTPViewModelError: Error {
     case otpNotValid
@@ -8,9 +9,11 @@ enum OTPViewModelError: Error {
 public final class OTPViewModel {
     
     private var authService: AuthService
+    private let container: Container
     
-    init(authService: AuthService) {
-        self.authService = authService
+    init(container: Container) {
+        self.container = container
+        self.authService = container.resolve(AuthService.self)!
     }
     
     func verifyOTP(with digits: [String]) async throws {

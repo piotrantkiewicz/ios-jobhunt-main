@@ -1,25 +1,48 @@
 import UIKit
+import DesignKit
 import JHAuth
+import JHCore
 import JHLogin
+import Swinject
 
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    var container: Container!
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        window = UIWindow(windowScene: windowScene)
+        let window = UIWindow(windowScene: windowScene)
+        
+        registerDependencies()
+        
+        UINavigationController.styleJobHunt()
+        let controller = setupInitialViewController()
+        let navigationController = UINavigationController(rootViewController: controller)
 
-        let authService = AuthServiceLive()
+        window.rootViewController = navigationController
+        window.makeKeyAndVisible()
+        self.window = window
+        
+        subscribeToLogin()
+        subscribeToLogout()
+    }
+    
+    private func setupInitialViewController() -> UIViewController {
+        let authService: AuthService = container!.resolve(AuthService.self)!
+        
+        if authService.isAuthenticated {
+            return setupTabBar()
+        } else {
+            return setupPhoneNumberController()
+        }
+    }
+    
+    private func setupPhoneNumberController() -> UIViewController {
         let phoneNumberController = PhoneNumberViewController()
-        phoneNumberController.viewModel = PhoneNumberViewModel(authService: authService)
-        let navigationController = UINavigationController(rootViewController: phoneNumberController)
-        navigationController.styleJobHunt()
-
-        window?.rootViewController = navigationController
-        window?.makeKeyAndVisible()
+        phoneNumberController.viewModel = PhoneNumberViewModel(container: container)
+        return phoneNumberController
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -52,4 +75,59 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
 }
+
+extension SceneDelegate {
+    private func subscribeToLogin() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didLoginSuccessfully),
+            name: Notification.Name(AppNotification.didLoginSuccessfully.rawValue),
+            object: nil
+        )
+    }
+    
+    @objc
+    private func didLoginSuccessfully() {
+        let navigationController = window?.rootViewController as? UINavigationController
+        navigationController?.setViewControllers([setupTabBar()], animated: true)
+    }
+    
+    private func setupTabBar() -> UIViewController {
+        TabBarController(container: container)
+    }
+}
+
+extension SceneDelegate {
+    private func subscribeToLogout() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didLogout),
+            name: Notification.Name(AppNotification.didLogout.rawValue),
+            object: nil
+        )
+    }
+    
+    @objc
+    private func didLogout() {
+        let navigationController = window?.rootViewController as? UINavigationController
+        navigationController?.setViewControllers([setupPhoneNumberController()], animated: true)
+    }
+}
+
+extension SceneDelegate {
+    
+    private func registerDependencies() {
+        let container = Container()
+        Assembly(container: container).assemble()
+        
+        self.container = container
+    }
+}
+
+
+
+
+
+
+
 

@@ -2,6 +2,7 @@ import UIKit
 import PhoneNumberKit
 import SnapKit
 import DesignKit
+import JHCore
 
 enum OTPStrings: String {
     case title = "Enter the OTP code"
@@ -288,13 +289,16 @@ extension OTPViewController {
             do {
                 try await self?.viewModel.verifyOTP(with: digits)
                 
-                let vc = UIViewController()
-                vc.modalPresentationStyle = .fullScreen
-                self?.present(vc, animated: true)
+                self?.didLoginSuccessfully()
+                
             } catch {
                 self?.showError(error.localizedDescription)
                 self?.setSubmitBtnEnabled()
             }
         }
+    }
+    
+    private func didLoginSuccessfully() {
+        NotificationCenter.default.post(.didLoginSuccessfully)
     }
 }

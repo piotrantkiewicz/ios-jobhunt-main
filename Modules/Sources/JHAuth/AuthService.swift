@@ -13,11 +13,25 @@ enum UserDefaultKey: String {
 }
 
 public protocol AuthService {
+    
+    var user: User? { get }
+    var isAuthenticated: Bool { get }
+    
     func requestOTP(forPhoneNumber phoneNumber: String) async throws
     func authenticate(with otp: String) async throws -> User
+    func logout() throws
 }
 
 public class AuthServiceLive: AuthService {
+    
+    public var isAuthenticated: Bool {
+        Auth.auth().currentUser != nil
+    }
+    
+    public var user: User? {
+        guard let user = Auth.auth().currentUser else { return nil }
+        return User(uid: user.uid)
+    }
     
     public init() {}
 
@@ -43,4 +57,17 @@ public class AuthServiceLive: AuthService {
         
         return User(uid: result.user.uid)
     }
+    
+    public func logout() throws {
+        try Auth.auth().signOut()
+    }
 }
+
+
+
+
+
+
+
+
+
